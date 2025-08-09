@@ -21,7 +21,7 @@ class DietPlannerTest {
 		System.out.println("A unit test was finished.");
 	}
 
-	@RepeatedTest(10)
+	@RepeatedTest(value = 10, name = RepeatedTest.LONG_DISPLAY_NAME)
 	void shouldReturnCorrectDietPlanWhenCorrectCoder() {
 		// Given
 		Coder coder = new Coder(1.82, 75.0, 26, Gender.MALE);

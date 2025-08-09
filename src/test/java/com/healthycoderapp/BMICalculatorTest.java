@@ -1,7 +1,9 @@
 package com.healthycoderapp;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,15 +18,17 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class BMICalculatorTest {
 	
-//	@BeforeAll //setting up db connections or servers, etc. (operations that are expensive to run before every test)
-//	static void beforeAll() {
-//		System.out.println("Before all unit tests.");
-//	}
-//	
-//	@AfterAll // close db connections, stop servers, etc.
-//	static void afterAll() {
-//		System.out.println("After all unit tests.");
-//	}
+	private String environment = "prod";
+	
+	@BeforeAll //setting up db connections or servers, etc. (operations that are expensive to run before every test)
+	static void beforeAll() {
+		System.out.println("Before all unit tests.");
+	}
+	
+	@AfterAll // close db connections, stop servers, etc.
+	static void afterAll() {
+		System.out.println("After all unit tests.");
+	}
 
 	@ParameterizedTest(name = "weight={0}, height={1}")
 	@CsvFileSource(resources = "/diet-recommended-input-data.csv", numLinesToSkip = 1)
@@ -82,6 +86,22 @@ class BMICalculatorTest {
 			() -> assertEquals(1.82, coderWorstBMI.getHeight()),
 			() -> assertEquals(98.0, coderWorstBMI.getWeight())
 		);
+	}
+	
+	@Test
+	void shouldReturnCoderWithWorstMBIIn500MsWhenCoderListHas10000Elements() {
+		// Given
+		assumeTrue(this.environment.equals("prod"));
+		List<Coder> coders = new ArrayList<>();
+		for (int i = 0; i < 10000; i++) {
+			coders.add(new Coder(1.0 + i, 10.0 + i));
+		}
+		
+		// When
+		Executable executable = () -> BMICalculator.findCoderWithWorstBMI(coders);
+		
+		// Then
+		assertTimeout(Duration.ofMillis(500), executable);
 	}
 	
 	@Test
