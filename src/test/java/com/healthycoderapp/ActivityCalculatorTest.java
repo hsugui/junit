@@ -50,7 +50,7 @@ class ActivityCalculatorTest {
 	@Test
 	void shouldThrowExceptionWhenInputBelowZero() {
 		// Given
-		int weeklyCardioMins = 40;
+		int weeklyCardioMins = -40;
 		int weeklyWorkouts = 7;
 		
 		// When
