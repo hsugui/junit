@@ -9,24 +9,28 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class BMICalculatorTest {
 	
-	@BeforeAll //setting up db connections or servers, etc. (operations that are expensive to run before every test)
-	static void beforeAll() {
-		System.out.println("Before all unit tests.");
-	}
-	
-	@AfterAll // close db connections, stop servers, etc.
-	static void afterAll() {
-		System.out.println("After all unit tests.");
-	}
+//	@BeforeAll //setting up db connections or servers, etc. (operations that are expensive to run before every test)
+//	static void beforeAll() {
+//		System.out.println("Before all unit tests.");
+//	}
+//	
+//	@AfterAll // close db connections, stop servers, etc.
+//	static void afterAll() {
+//		System.out.println("After all unit tests.");
+//	}
 
-	@Test
-	void shouldReturnTrueWhenDietRecommended() {
+	@ParameterizedTest(name = "weight={0}, height={1}")
+	@CsvSource(value = {"89.0, 1.72", "95.0, 1.75", "110.0, 1.78"})
+	void shouldReturnTrueWhenDietRecommended(Double coderWeight, Double coderHeight) {
 		// Given
-		double weight = 89.0;
-		double height = 1.72;
+		double weight = coderWeight;
+		double height = coderHeight;
 		
 		// When
 		boolean recommended = BMICalculator.isDietRecommended(weight, height);
