@@ -10,7 +10,7 @@ Created by Sam Atkinson.
 - Writing effective unit tests in Java using JUnit 5.
 - Creating practical, real-world test scenarios.
 - Following unit testing best practices.
-- Running and debugging tests in Eclipse or IntelliJ IDEA.
+- Running and debugging tests in the IDE.
 - Introduction to Test-Driven Development (TDD).
 
 ## Technologies Used
